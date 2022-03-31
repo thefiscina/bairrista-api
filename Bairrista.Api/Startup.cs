@@ -88,20 +88,20 @@ namespace Api
                 endpoints.MapControllers();
             });
 
-            var appSettingsSection = Configuration.GetSection("AppSettings");
-            var appSetting = appSettingsSection.Get<AppSetting>();
+            // var appSettingsSection = Configuration.GetSection("AppSettings");
+            // var appSetting = appSettingsSection.Get<AppSetting>();
 
-            string fileFolder = appSetting.FileFolder;
+            // string fileFolder = appSetting.FileFolder;
 
-            var aplicationPath = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
-            string fileServ = Path.Combine(aplicationPath, fileFolder);
+            // var aplicationPath = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
+            // string fileServ = Path.Combine(aplicationPath, fileFolder);
 
-            app.UseStaticFiles();
-            app.UseStaticFiles(new StaticFileOptions
-            {
-                FileProvider = new PhysicalFileProvider(fileServ),
-                RequestPath = "/File"
-            });
+            // app.UseStaticFiles();
+            // app.UseStaticFiles(new StaticFileOptions
+            // {
+            //     FileProvider = new PhysicalFileProvider(fileServ),
+            //     RequestPath = "/File"
+            // });
         }
     }
 }
