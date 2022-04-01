@@ -20,30 +20,30 @@ namespace Api.Controllers
             _service = service;
         }
 
-        [HttpGet]
-        public List<EnderecoResponse> Listar([FromQuery] EnderecoQuery query)
-        {
-            List<EnderecoResponse> retorno = new List<EnderecoResponse>();
-            retorno = _service.Listar(query);
-            return retorno;
-        }
+        //[HttpGet]
+        //public List<EnderecoResponse> Listar([FromQuery] EnderecoQuery query)
+        //{
+        //    List<EnderecoResponse> retorno = new List<EnderecoResponse>();
+        //    retorno = _service.Listar(query);
+        //    return retorno;
+        //}
 
-        [HttpPost]
-        public EnderecoResponse Salvar([FromBody] EnderecoRequest EnderecoRequest)
-        {
-            return _service.Salvar(EnderecoRequest);
-        }
+        //[HttpPost]
+        //public EnderecoResponse Salvar([FromBody] EnderecoRequest EnderecoRequest)
+        //{
+        //    return _service.Salvar(EnderecoRequest);
+        //}
 
-        [HttpPut("{id}")]
-        public EnderecoResponse Alterar(int id, [FromBody] EnderecoRequest EnderecoRequest)
-        {
-            return _service.Alterar(id, EnderecoRequest);
-        }
+        //[HttpPut("{id}")]
+        //public EnderecoResponse Alterar(int id, [FromBody] EnderecoRequest EnderecoRequest)
+        //{
+        //    return _service.Alterar(id, EnderecoRequest);
+        //}
 
-        [HttpGet("{id}")]
-        public EnderecoResponse Obter(int id)
-        {
-            return _service.Obter(id);
-        }
+        //[HttpGet("{id}")]
+        //public EnderecoResponse Obter(int id)
+        //{
+        //    return _service.Obter(id);
+        //}
     }
 }

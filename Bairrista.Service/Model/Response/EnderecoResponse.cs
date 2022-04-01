@@ -12,8 +12,7 @@ namespace Bairrista.Service.Model
         public string cidade { get; set; }
         public string latitude { get; set; }
         public string longitude { get; set; }
-        public bool endereco_principal { get; set; }
-        public int usuario_id { get; set; }
+       public bool endereco_principal { get; set; }
 
     }
 }

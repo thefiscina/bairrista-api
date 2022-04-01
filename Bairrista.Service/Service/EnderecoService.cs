@@ -13,7 +13,7 @@ namespace Bairrista.Dominio.Service
         List<EnderecoResponse> Listar(EnderecoQuery query);
         EnderecoResponse Obter(int id);
         EnderecoResponse Salvar(EnderecoRequest EnderecoService);
-        EnderecoResponse Alterar(int id, EnderecoRequest EnderecoService);                
+        EnderecoResponse Alterar(int id, EnderecoRequest EnderecoService);
     }
 
     public class EnderecoService : IEnderecoService
@@ -76,7 +76,7 @@ namespace Bairrista.Dominio.Service
 
             _request = _domain.Alterar(_request);
             return _mapper.Map<EnderecoResponse>(_request);
-        }       
-     
+        }
+
     }
 }
