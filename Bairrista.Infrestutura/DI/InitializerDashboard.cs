@@ -26,7 +26,7 @@ namespace Bairrista.Infraestrutura
 
             _services.AddDbContext<DashboardContext>(options =>
             {
-                options.UseNpgsql($"Server={server}; Database={database}; User Id={username}; Password={password}", opt =>
+                options.UseNpgsql($"Server={server}; Database={database}; User Id={username}; Password={password};SSL Mode=Require; Trust Server Certificate=true;", opt =>
                 {
                     opt.CommandTimeout(180);
                     opt.EnableRetryOnFailure(5);

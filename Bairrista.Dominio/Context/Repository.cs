@@ -72,36 +72,7 @@ namespace Bairrista.Dominio
             {
                 query = query.Where(filter);
             }
-
-            //foreach (var includeProperty in includeProperties.Split
-            //    (new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
-            //{
-            //    query = query.Include(includeProperty);
-            //}
-
-            //if (orderBy != null)
-            //{
-            //    if (skip != null && take != null)
-            //        return orderBy(query).Skip(skip.Value).Take(take.Value);
-
-            //    if (skip != null && take == null)
-            //        return orderBy(query).Skip(skip.Value);
-
-            //    if (skip == null && take != null)
-            //        return orderBy(query).Take(take.Value);
-
-            //    return orderBy(query);
-            //}
-
-            //if (skip != null && take != null)
-            //    return query.Skip(skip.Value).Take(take.Value);
-
-            //if (skip != null && take == null)
-            //    return query.Skip(skip.Value);
-
-            //if (skip == null && take != null)
-            //    return query.Take(take.Value);
-
+         
             return query;
 
         }
