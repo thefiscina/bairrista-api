@@ -53,11 +53,10 @@ namespace Api.Controllers
 
         #region Endereco
         [HttpGet("{id}/Endereco")]
-        public List<EnderecoResponse> ListarEnderecos(int id, [FromQuery] EnderecoQuery query)
-        {
-            query.usuario_id = id;
+        public List<EnderecoResponse> ListarEnderecos(int id)
+        {            
             List<EnderecoResponse> retorno = new List<EnderecoResponse>();            
-            retorno = _enderecoUsuarioService.Listar(query);
+            retorno = _enderecoUsuarioService.Listar(id);
           
             return retorno;
         }

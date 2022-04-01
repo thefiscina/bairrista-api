@@ -12,32 +12,33 @@ namespace Bairrista.Dominio.Service
     {
         List<ProfissaoResponse> Listar(ProfissaoQuery query);
         ProfissaoResponse Obter(int id);
-        ProfissaoResponse Salvar(ProfissaoRequest ProfissaoService);
+        //ProfissaoResponse Salvar(ProfissaoRequest ProfissaoService);
         //ProfissaoResponse Alterar(int id, ProfissaoRequest ProfissaoService);                
     }
 
     public class ProfissaoService : IProfissaoService
     {
-        IProfissaoDomain _domain;        
-        IUsuarioService _usuarioService;        
+        IProfissaoDomain _domain;
+        IUsuarioService _usuarioService;
         IMapper _mapper;
         public ProfissaoService(DashboardContext context, IUsuarioService usuarioService)
         {
             _mapper = AutoMapping.mapper;
             _domain = new ProfissaoDomain(context);
-            _usuarioService = usuarioService;            
+            _usuarioService = usuarioService;
         }
         public List<ProfissaoResponse> Listar(ProfissaoQuery query)
         {
             ExpressionStarter<Profissao> filter = PredicateBuilder.New<Profissao>(a => true);
 
-            //if (query.usuario_id > 0)
-            //    filter.And(a => a.Usuario.Id == query.usuario_id);
+            if (!String.IsNullOrEmpty(query.texto))
+            {
+                string texto = query.texto.ToLower();
+                filter.And(a => a.Nome.ToLower().Contains(texto));
+            }
 
             Type myType = typeof(Profissao);
-       
-            var _retorno = _domain.Listar(filter);          
-
+            var _retorno = _domain.Listar(filter);
             return _mapper.Map<List<ProfissaoResponse>>(_retorno);
         }
 
@@ -48,12 +49,12 @@ namespace Bairrista.Dominio.Service
             return _mapper.Map<ProfissaoResponse>(_domain.Obter(id));
         }
 
-        public ProfissaoResponse Salvar(ProfissaoRequest request)
-        {
-            Profissao _request = _mapper.Map<Profissao>(request);          
-            _request = _domain.Salvar(_request);
-            return _mapper.Map<ProfissaoResponse>(_request);
-        }
+        //public ProfissaoResponse Salvar(ProfissaoRequest request)
+        //{
+        //    Profissao _request = _mapper.Map<Profissao>(request);          
+        //    _request = _domain.Salvar(_request);
+        //    return _mapper.Map<ProfissaoResponse>(_request);
+        //}
 
         //public ProfissaoResponse Alterar(int id, ProfissaoRequest request)
         //{
@@ -68,6 +69,6 @@ namespace Bairrista.Dominio.Service
         //    _request = _domain.Alterar(_request);
         //    return _mapper.Map<ProfissaoResponse>(_request);
         //}       
-     
+
     }
 }

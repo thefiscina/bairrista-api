@@ -25,7 +25,7 @@ namespace Bairrista.Dominio.Service
             Usuario _usuario = _usuarioDomain.ObterPorLogin(request.login);
 
             if (_usuario == null)
-                throw new Exception();
+                throw new Exception("Usuário não encontrado");
 
             if (!Auth.VerificarSenhaHash(request.senha))
                 throw new Exception("Senha Inválida");

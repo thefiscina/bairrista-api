@@ -14,6 +14,9 @@ namespace Bairrista.Dominio.Service
         EnderecoResponse Obter(int id);
         EnderecoResponse Salvar(EnderecoRequest EnderecoService);
         EnderecoResponse Alterar(int id, EnderecoRequest EnderecoService);
+
+        List<EnderecoResponse> Listar(int id);
+
     }
 
     public class EnderecoService : IEnderecoService
@@ -44,6 +47,19 @@ namespace Bairrista.Dominio.Service
             return _mapper.Map<List<EnderecoResponse>>(_retorno);
         }
 
+        public List<EnderecoResponse> Listar(int id)
+        {
+            ExpressionStarter<Endereco> filter = PredicateBuilder.New<Endereco>(a => true);
+
+            if (id > 0)
+                filter.And(a => a.Usuario.Id == id);          
+
+            Type myType = typeof(Endereco);
+
+            var _retorno = _domain.Listar(filter);
+
+            return _mapper.Map<List<EnderecoResponse>>(_retorno);
+        }
 
 
         public EnderecoResponse Obter(int id)

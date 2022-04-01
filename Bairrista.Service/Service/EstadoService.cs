@@ -10,7 +10,7 @@ namespace Bairrista.Dominio.Service
 {
     public interface IEstadoService
     {
-        List<EstadoResponse> Listar();
+        List<EstadoResponse> Listar(EstadoQuery query);
         EstadoResponse Obter(int id);          
     }
 
@@ -25,9 +25,15 @@ namespace Bairrista.Dominio.Service
             _domain = new EstadoDomain(context);
             _usuarioService = usuarioService;            
         }
-        public List<EstadoResponse> Listar()
+        public List<EstadoResponse> Listar(EstadoQuery query)
         {
             ExpressionStarter<Estado> filter = PredicateBuilder.New<Estado>(a => true);
+
+            if (!String.IsNullOrEmpty(query.texto))
+            {
+                string texto = query.texto.ToLower();
+                filter.And(a => a.Nome.ToLower().Contains(texto));
+            }
 
             Type myType = typeof(Estado);
        
