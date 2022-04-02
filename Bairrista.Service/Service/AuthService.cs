@@ -32,7 +32,11 @@ namespace Bairrista.Dominio.Service
 
             AuthResponse authResponse = new AuthResponse();
             authResponse.access_token = Auth.GerarToken(_usuario.Id.ToString(), _usuario.Token, _tokenSettings.Secret, _tokenSettings.Seconds, _tokenSettings.Audience);
-            authResponse.nome = _usuario.Nome;            
+            authResponse.nome = _usuario.Nome;
+            authResponse.sobrenome = _usuario.Sobrenome;
+            authResponse.profissao = _usuario.Profissao;
+            authResponse.tipo_usuario = _usuario.TipoUsuario;
+            authResponse.id = _usuario.Id;
             return authResponse;
         }
     }

@@ -34,9 +34,7 @@ namespace Bairrista.Dominio.Service
         
             if (!string.IsNullOrEmpty(query.cpf))
                 filter.And(a => a.Cpf == query.cpf);
-
-            //if (query.id > 0)
-            //    filter.And(a => a.Id == query.id);
+        
 
             if (!string.IsNullOrEmpty(query.profissao))
                 filter.And(a => a.Profissao == query.profissao);

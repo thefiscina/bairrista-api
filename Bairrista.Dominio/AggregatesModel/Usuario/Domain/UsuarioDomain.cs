@@ -33,6 +33,11 @@ namespace Bairrista.Dominio
 
         public Usuario Salvar(Usuario usuario)
         {
+            Usuario _usuario = ObterPorLogin(usuario.Cpf);
+            if(_usuario != null)
+            {
+                throw new Exception("Usuário já cadastrado");
+            }
             _baseRepository.Save(usuario);
             _baseRepository.SaveChanges();
             return usuario;
@@ -70,6 +75,7 @@ namespace Bairrista.Dominio
         {
             return _baseRepository.GetById(id);
         }
+
 
         public int Contar(Expression<Func<Usuario, bool>> filter = null)
         {
