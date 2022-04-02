@@ -18,8 +18,8 @@ namespace Bairrista.Dominio
         [Column("data_hora_orcamento")]
         public DateTime DataHoraOrcamento { get; set; } = DateTime.Now;
 
-        [Column("usuario_profissional_id")]
-        public int UsuarioProfissionalId { get; set; }
+        [Column("usuario_solicitante_id")]
+        public int UsuarioSolicitanteId { get; set; }
 
         [Column("usuario_id")]
         [ForeignKey("Usuario")]

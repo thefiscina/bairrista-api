@@ -1,17 +1,19 @@
 ﻿using Bairrista.Dominio;
+using System;
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
 namespace Bairrista.Service.Model
 {
-    public class OrcamentoResponse : EntityResponse
+    public class OrcamentoResponse
     {
-        public string cep { get; set; }
-        public string logradouro { get; set; }
-        public string bairro { get; set; }
-        public string cidade { get; set; }
-        public string latitude { get; set; }
-        public string longitude { get; set; }
-        public int usuario_id { get; set; }
+        public int id { get; set; }
+        public string descricao { get; set; }
+        public DateTime data_hora_orcamento { get; set; }
+        public DateTime data_criacao { get; set; }
+        public int usuario_solicitante_id { get; set; }
+        public int UsuarioId { get; set; }
+        public OrcamentoType status_orcamento { get; set; }
+
     }
 }

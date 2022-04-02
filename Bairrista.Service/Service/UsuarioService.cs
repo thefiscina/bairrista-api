@@ -17,6 +17,8 @@ namespace Bairrista.Dominio.Service
         UsuarioResponse Obter(int id);
         UsuarioResponse Salvar(UsuarioRequest cliente);
         UsuarioResponse Alterar(int id, UsuarioRequest cliente);
+        List<UsuarioResponse> ListarComEndereco(UsuarioQuery query);
+
     }
 
     public class UsuarioService : IUsuarioService
@@ -37,11 +39,14 @@ namespace Bairrista.Dominio.Service
         
 
             if (!string.IsNullOrEmpty(query.profissao))
-                filter.And(a => a.Profissao == query.profissao);
+            {
+                string texto = query.profissao.ToLower();
+                filter.And(a => a.Profissao.ToLower().Contains(texto));
+            }                
 
+            string includeProperties = "Enderecos,Orcamentos";
 
-
-            var _retorno = _domain.Listar(filter);
+            var _retorno = _domain.Listar(filter, includeProperties);
 
  
 
@@ -58,7 +63,7 @@ namespace Bairrista.Dominio.Service
         {
             var _request = _mapper.Map<Usuario>(request);
         
-            _request = _domain.Alterar(_request);
+            _request = _domain.Alterar(_request, id);
             if (!string.IsNullOrEmpty(request.senha))
             {
                 Auth.CriarSenhaHash(request.senha);             
@@ -77,6 +82,29 @@ namespace Bairrista.Dominio.Service
 
             filter.And(a => a.Cpf == cpf);
             return _mapper.Map<UsuarioResponse>(_domain.Listar(filter).FirstOrDefault());
+        }
+
+        public List<UsuarioResponse> ListarComEndereco(UsuarioQuery query)
+        {
+            ExpressionStarter<Usuario> filter = PredicateBuilder.New<Usuario>(a => true);
+
+            if (!string.IsNullOrEmpty(query.cpf))
+                filter.And(a => a.Cpf == query.cpf);
+
+
+            if (!string.IsNullOrEmpty(query.profissao))
+            {
+                string texto = query.profissao.ToLower();
+                filter.And(a => a.Profissao.ToLower().Contains(texto));
+            }
+
+            string includeProperties = "Endereco";
+
+            var _retorno = _domain.Listar(filter, includeProperties);
+
+
+
+            return _mapper.Map<List<UsuarioResponse>>(_retorno);
         }
         public UsuarioResponse Obter(int id)
         {

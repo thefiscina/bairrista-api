@@ -4,11 +4,9 @@ using System.Text.Json.Serialization;
 
 namespace Bairrista.Service.Model
 {
-    public class MunicipioResponse : EntityResponse
+    public class MunicipioResponse 
     {
-        public string nome { get; set; }
-        public string cep { get; set; }
-      
-        public int estado_id { get; set; }
+        public int id { get; set; }
+        public string nome { get; set; }                
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Bairrista.Dominio
@@ -35,5 +36,10 @@ namespace Bairrista.Dominio
 
         [Column("usuario_destaque")]
         public Boolean UsuarioDestaque { get; set; } = false;
+        
+        public List<Endereco> Enderecos { get; set; }
+
+        public List<Orcamento> Orcamentos { get; set; }
+
     }
 }

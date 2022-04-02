@@ -34,11 +34,11 @@ namespace Api.Controllers
         //    return _service.Salvar(EnderecoRequest);
         //}
 
-        //[HttpPut("{id}")]
-        //public EnderecoResponse Alterar(int id, [FromBody] EnderecoRequest EnderecoRequest)
-        //{
-        //    return _service.Alterar(id, EnderecoRequest);
-        //}
+        [HttpPut("{id}")]
+        public EnderecoResponse Alterar(int id, [FromBody] EnderecoRequest EnderecoRequest)
+        {
+            return _service.Alterar(id, EnderecoRequest);
+        }
 
         //[HttpGet("{id}")]
         //public EnderecoResponse Obter(int id)

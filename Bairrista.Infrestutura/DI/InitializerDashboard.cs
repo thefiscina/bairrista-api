@@ -23,10 +23,13 @@ namespace Bairrista.Infraestrutura
             var database = _configuration["database:postgresql:database"];
             var username = _configuration["database:postgresql:username"];
             var password = _configuration["database:postgresql:password"];
+            var ssl = _configuration["database:postgresql:ssl"];
+            var certificate = _configuration["database:postgresql:certificate"];
+
 
             _services.AddDbContext<DashboardContext>(options =>
             {
-                options.UseNpgsql($"Server={server}; Database={database}; User Id={username}; Password={password};SSL Mode=Require; Trust Server Certificate=true;", opt =>
+                options.UseNpgsql($"Server={server}; Database={database}; User Id={username}; Password={password};SSL Mode={ssl}; Trust Server Certificate={certificate};", opt =>
                 {
                     opt.CommandTimeout(180);
                     opt.EnableRetryOnFailure(5);

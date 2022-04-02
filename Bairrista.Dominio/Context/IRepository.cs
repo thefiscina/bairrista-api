@@ -7,8 +7,8 @@ namespace Bairrista.Dominio
 {
     public interface IRepository<TEntity> where TEntity : class, new()
     {
-        IQueryable<TEntity> Consultar(Expression<Func<TEntity, bool>> filter = null);        
-        List<TEntity> Listar(Expression<Func<TEntity, bool>> filter = null);
+        IQueryable<TEntity> Consultar(Expression<Func<TEntity, bool>> filter = null, string includeProperties = "");        
+        List<TEntity> Listar(Expression<Func<TEntity, bool>> filter = null, string includeProperties = "");
         int Contar(Expression<Func<TEntity, bool>> filter = null);
         TEntity GetById(int id);
         TEntity Save(TEntity entity);

@@ -51,12 +51,20 @@ namespace Bairrista.Dominio.Service
         public OrcamentoResponse Salvar(OrcamentoRequest request)
         {
             Orcamento _request = _mapper.Map<Orcamento>(request);
-            UsuarioResponse _usuario = _usuarioService.Obter(request.usuario_id);
+            UsuarioResponse _usuario = _usuarioService.Obter(request.usuario_solicitante_id);
             if (_usuario == null)
-                throw new Exception("");
+            {
+                throw new Exception("Usuário não encontrado");
+            }
 
-            _request.UsuarioId = _usuario.id;
+            UsuarioResponse _profissional = _usuarioService.Obter(request.usuario_id);
+            if (_usuario == null)
+            {
+                throw new Exception("Profissional não encontrado");
+            }
 
+            _request.UsuarioId = _profissional.id;
+            _request.UsuarioSolicitanteId = _usuario.id;
             _request = _domain.Salvar(_request);
             return _mapper.Map<OrcamentoResponse>(_request);
         }

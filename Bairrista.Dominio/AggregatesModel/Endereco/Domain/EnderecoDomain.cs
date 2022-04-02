@@ -14,7 +14,7 @@ namespace Bairrista.Dominio
         //Endereco Obter(string uuid);
         Endereco Obter(int id);
         Endereco Salvar(Endereco Endereco);
-        Endereco Alterar(Endereco Endereco);
+        Endereco Alterar(Endereco Endereco, int id);
     }
 
     public class EnderecoDomain : IEnderecoDomain
@@ -42,32 +42,27 @@ namespace Bairrista.Dominio
             return Endereco;
         }
 
-        public Endereco Alterar(Endereco Endereco)
+        public Endereco Alterar(Endereco Endereco, int id)
         {
-            Endereco _Endereco = Obter(Endereco.Id);
+            Endereco _Endereco = Obter(id);
             if (_Endereco == null)
             {
-                _Endereco = Obter(Endereco.Id);
-                if (_Endereco == null)
-                    throw new System.Exception();
+                throw new System.Exception("Endereço não encontrado");
             }
             _Endereco.Logradouro = Endereco.Logradouro;
             _Endereco.Bairro = Endereco.Bairro;
             _Endereco.Cidade = Endereco.Cidade;
+            _Endereco.Estado = Endereco.Estado;
+            _Endereco.EstadoId = Endereco.EstadoId;
+            _Endereco.CidadeId = Endereco.CidadeId;
             _Endereco.Latitude = Endereco.Latitude;
-            _Endereco.Longitude = Endereco.Longitude;     
-            _Endereco.Usuario = Endereco.Usuario;
-            
+            _Endereco.Longitude = Endereco.Longitude;
+            _Endereco.Cep = Endereco.Cep;
 
             _Endereco = _baseRepository.Update(_Endereco);
             _baseRepository.SaveChanges();
             return _Endereco;
         }
-
-        //public Endereco Obter(int id)
-        //{
-        //    return _baseRepository.Consultar(PredicateBuilder.New<Endereco>().And(a => a.Id == id),null,null,null,"Usuario").FirstOrDefault();
-        //}
 
         public Endereco Obter(int id)
         {

@@ -36,6 +36,8 @@ namespace Bairrista.Dominio.Service
             authResponse.sobrenome = _usuario.Sobrenome;
             authResponse.profissao = _usuario.Profissao;
             authResponse.tipo_usuario = _usuario.TipoUsuario;
+            authResponse.email = _usuario.Email;
+            authResponse.telefone = _usuario.Telefone;
             authResponse.id = _usuario.Id;
             return authResponse;
         }

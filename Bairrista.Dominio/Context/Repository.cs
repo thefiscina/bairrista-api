@@ -59,12 +59,12 @@ namespace Bairrista.Dominio
             _context.SaveChanges();
         }
 
-        public List<TEntity> Listar(Expression<Func<TEntity, bool>> filter = null)
+        public List<TEntity> Listar(Expression<Func<TEntity, bool>> filter = null, string includeProperties = "")
         {
-            return Consultar(filter).ToList();
+            return Consultar(filter, includeProperties).ToList();
         }
 
-        public IQueryable<TEntity> Consultar(Expression<Func<TEntity, bool>> filter = null)
+        public IQueryable<TEntity> Consultar(Expression<Func<TEntity, bool>> filter = null, string includeProperties = "")
         {
             IQueryable<TEntity> query = _context.Set<TEntity>();
 
@@ -72,7 +72,13 @@ namespace Bairrista.Dominio
             {
                 query = query.Where(filter);
             }
-         
+
+            foreach (var includeProperty in includeProperties.Split
+              (new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+            {
+                query = query.Include(includeProperty);
+            }
+
             return query;
 
         }

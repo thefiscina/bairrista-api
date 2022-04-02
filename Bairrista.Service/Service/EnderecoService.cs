@@ -90,7 +90,7 @@ namespace Bairrista.Dominio.Service
 
             _request.UsuarioId = _usuario.id;
 
-            _request = _domain.Alterar(_request);
+            _request = _domain.Alterar(_request, id);
             return _mapper.Map<EnderecoResponse>(_request);
         }
 
