@@ -36,6 +36,14 @@ namespace Bairrista.Dominio
             {
                 throw new Exception("Usuário já cadastrado");
             }
+            if (!String.IsNullOrEmpty(usuario.Profissao))
+            {
+                usuario.TipoUsuario = UsuarioType.PROFISSIONAL;
+            }
+            else
+            {
+                usuario.TipoUsuario = UsuarioType.COMUM;
+            }
             _baseRepository.Save(usuario);
             _baseRepository.SaveChanges();
             return usuario;
