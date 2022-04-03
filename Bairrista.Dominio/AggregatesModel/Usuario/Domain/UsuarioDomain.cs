@@ -43,7 +43,7 @@ namespace Bairrista.Dominio
 
         public Usuario Alterar(Usuario usuario,int id)
         {
-            Usuario _usuario = Obter(id);
+            Usuario _usuario = Obter(id); 
             if (_usuario == null)
             {
                 throw new System.Exception("Usuário não encontrado");
@@ -52,7 +52,14 @@ namespace Bairrista.Dominio
             _usuario.Sobrenome = usuario.Sobrenome;     
             _usuario.Email = usuario.Email;
             _usuario.Telefone = usuario.Telefone;
-            _usuario.Profissao = usuario.Profissao;
+            if (!String.IsNullOrEmpty(usuario.Profissao)){
+                _usuario.Profissao = usuario.Profissao;
+                _usuario.TipoUsuario = UsuarioType.PROFISSIONAL;
+            }
+            else
+            {
+                _usuario.TipoUsuario = UsuarioType.COMUM;
+            }
 
             _baseRepository.Update(_usuario);
             _baseRepository.SaveChanges();
