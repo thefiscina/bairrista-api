@@ -10,29 +10,32 @@ namespace Bairrista.Dominio.Service
 {
     public interface IOrcamentoRespostaService
     {
-        List<OrcamentoRespostaResponse> Listar(OrcamentoRespostaQuery query);
+        List<OrcamentoRespostaResponse> Listar(int id);
         OrcamentoRespostaResponse Obter(int id);
-        OrcamentoRespostaResponse Salvar(OrcamentoRespostaRequest OrcamentoRespostaService);
+        OrcamentoRespostaResponse Salvar(OrcamentoRespostaRequest OrcamentoRespostaRequest);
                      
     }
 
     public class OrcamentoRespostaService : IOrcamentoRespostaService
     {
         IOrcamentoRespostaDomain _domain;        
-        IUsuarioService _usuarioService;        
+        IUsuarioService _usuarioService;
+        IOrcamentoService _orcaemntoService;
         IMapper _mapper;
-        public OrcamentoRespostaService(DashboardContext context, IUsuarioService usuarioService)
+        public OrcamentoRespostaService(DashboardContext context, IUsuarioService usuarioService, IOrcamentoService orcamentoService)
         {
             _mapper = AutoMapping.mapper;
             _domain = new OrcamentoRespostaDomain(context);
-            _usuarioService = usuarioService;            
+            _usuarioService = usuarioService;
+            _orcaemntoService = orcamentoService;
+
         }
-        public List<OrcamentoRespostaResponse> Listar(OrcamentoRespostaQuery query)
+        public List<OrcamentoRespostaResponse> Listar(int id)
         {
             ExpressionStarter<OrcamentoResposta> filter = PredicateBuilder.New<OrcamentoResposta>(a => true);
 
-            if (query.orcamento_id > 0)
-                filter.And(a => a.Orcamento.Id == query.orcamento_id);
+            if (id > 0)
+                filter.And(a => a.Orcamento.Id == id);
 
             Type myType = typeof(OrcamentoResposta);
        
@@ -50,15 +53,20 @@ namespace Bairrista.Dominio.Service
 
         public OrcamentoRespostaResponse Salvar(OrcamentoRespostaRequest request)
         {
+
             OrcamentoResposta _request = _mapper.Map<OrcamentoResposta>(request);
-            //UsuarioResponse _usuario = _usuarioService.Obter(request.usuario_id);
-            //if (_usuario == null)
-            //    throw new Exception("");
 
-            //_request.UsuarioId = _usuario.id;
+            OrcamentoResponse _orcamento = _orcaemntoService.Obter(request.orcamento_id);
 
+            if (_orcamento == null)
+            {
+                throw new Exception("Orçamento não encontrado");
+            }
+
+            _request.OrcamentoId = _orcamento.id;       
             _request = _domain.Salvar(_request);
-            return _mapper.Map<OrcamentoRespostaResponse>(_request);
+            return _mapper.Map<OrcamentoRespostaResponse>(_request);                 
+         
         }
       
      

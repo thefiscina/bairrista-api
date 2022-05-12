@@ -44,7 +44,7 @@ namespace Bairrista.Dominio.Service
                 filter.And(a => a.Profissao.ToLower().Contains(texto));
             }                
 
-            string includeProperties = "Enderecos,Orcamentos";
+            string includeProperties = "Enderecos,Orcamentos,Avaliacoes";
 
             var _retorno = _domain.Listar(filter, includeProperties);
 

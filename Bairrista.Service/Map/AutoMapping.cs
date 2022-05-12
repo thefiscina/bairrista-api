@@ -14,7 +14,7 @@ namespace Bairrista.Service.Map
                 cfg.AddProfile<UsuarioProfile>();
                 cfg.AddProfile<EnderecoProfile>();
                 cfg.AddProfile<OrcamentoProfile>();
-                cfg.AddProfile<OrcamentoResposta>();
+                cfg.AddProfile<OrcamentoRespostaProfile>();
                 cfg.AddProfile<AvaliacaoProfile>();
                 cfg.AddProfile<PagamentoUsuarioProfile>();
                 cfg.AddProfile<ProfissaoProfile>();

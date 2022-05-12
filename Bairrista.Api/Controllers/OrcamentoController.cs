@@ -13,20 +13,15 @@ namespace Api.Controllers
     {
         private readonly ILogger<OrcamentoController> _logger;
         private readonly IOrcamentoService _service;
+        private readonly IOrcamentoRespostaService _orcamentoUsuarioService;
 
-        public OrcamentoController(ILogger<OrcamentoController> logger, IOrcamentoService service)
+        public OrcamentoController(ILogger<OrcamentoController> logger, IOrcamentoService service, IOrcamentoRespostaService orcamentoUsuarioService)
         {
             _logger = logger;
             _service = service;
-        }
+            _orcamentoUsuarioService = orcamentoUsuarioService;
 
-        //[HttpGet]
-        //public List<OrcamentoResponse> Listar([FromQuery] OrcamentoQuery query)
-        //{
-        //    List<OrcamentoResponse> retorno = new List<OrcamentoResponse>();
-        //    retorno = _service.Listar(query);
-        //    return retorno;
-        //}
+        }
 
         [HttpPost]
         public OrcamentoResponse Salvar([FromBody] OrcamentoRequest OrcamentoRequest)
@@ -34,16 +29,29 @@ namespace Api.Controllers
             return _service.Salvar(OrcamentoRequest);
         }
 
-        //[HttpPut("{id}")]
-        //public OrcamentoResponse Alterar(int id, [FromBody] OrcamentoRequest OrcamentoRequest)
-        //{
-        //    return _service.Alterar(id, OrcamentoRequest);
-        //}
 
         [HttpGet("{id}")]
         public OrcamentoResponse Obter(int id)
         {
             return _service.Obter(id);
+        }
+
+
+        #region Respostas
+        [HttpGet("{id}/Respostas")]
+        public List<OrcamentoRespostaResponse> ListarRespostas(int id)
+        {
+            List<OrcamentoRespostaResponse> retorno = new List<OrcamentoRespostaResponse>();
+            retorno = _orcamentoUsuarioService.Listar(id);
+
+            return retorno;
+        }
+        #endregion
+
+        [HttpPut("{id}")]
+        public OrcamentoResponse Alterar(int id, [FromBody] OrcamentoAlterarRequest bodyRequest)
+        {
+            return _service.Alterar(id, bodyRequest);
         }
     }
 }

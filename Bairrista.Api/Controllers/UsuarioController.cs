@@ -13,14 +13,20 @@ namespace Api.Controllers
         private readonly ILogger<UsuarioController> _logger;
         private readonly IUsuarioService _service;    
         private readonly IEnderecoService _enderecoUsuarioService;
+        private readonly IOrcamentoService _orcamentoUsuarioService;
+        private readonly IAvaliacaoService _avaliacaoUsuarioService;
 
 
 
-        public UsuarioController(ILogger<UsuarioController> logger, IUsuarioService service, IEnderecoService _enderecoService)
+
+        public UsuarioController(ILogger<UsuarioController> logger, IUsuarioService service, IEnderecoService _enderecoService, IOrcamentoService _orcamentoService, IAvaliacaoService _avaliacaoService)
         {
             _logger = logger;
             _service = service;
-            _enderecoUsuarioService = _enderecoService;          
+            _enderecoUsuarioService = _enderecoService;
+            _orcamentoUsuarioService = _orcamentoService;
+            _avaliacaoUsuarioService = _avaliacaoService;
+
         }
 
         [HttpGet]
@@ -70,6 +76,28 @@ namespace Api.Controllers
 
         #endregion
 
+        #region Orcamentos      
+        [HttpGet("{id}/Orcamento")]
+        public List<OrcamentoResponse> ListarOrcamentos(int id, [FromQuery] OrcamentoQuery query)
+        {
+            List<OrcamentoResponse> retorno = new List<OrcamentoResponse>();
+            retorno = _orcamentoUsuarioService.Listar(id, query);
+
+            return retorno;
+        }
+
+        #endregion
+
+        #region Avaliacoes      
+        [HttpGet("{id}/Avaliacao")]
+        public List<AvaliacaoResponse> ListarAvaliacoes(int id)
+        {
+            List<AvaliacaoResponse> retorno = new List<AvaliacaoResponse>();
+            retorno = _avaliacaoUsuarioService.Listar(id);
+
+            return retorno;
+        }
+        #endregion
 
     }
 }

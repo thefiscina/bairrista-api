@@ -13,7 +13,8 @@ namespace Bairrista.Dominio.Service
         List<AvaliacaoResponse> Listar(ComumQuery query);
         AvaliacaoResponse Obter(int id);
         AvaliacaoResponse Salvar(AvaliacaoRequest AvaliacaoService);
-        //AvaliacaoResponse Alterar(int id, AvaliacaoRequest AvaliacaoService);                
+
+        List<AvaliacaoResponse> Listar(int id);                    
     }
 
     public class AvaliacaoService : IAvaliacaoService
@@ -62,19 +63,20 @@ namespace Bairrista.Dominio.Service
             return _mapper.Map<AvaliacaoResponse>(_request);
         }
 
-        //public Avaliacao Alterar(int id, AvaliacaoRequest request)
-        //{
-        //    Avaliacao _request = _mapper.Map<Avaliacao>(request);
-        //    //_request.Uuid = new Guid(uuid);
-        //    AvaliacaoResponse _usuario = _avaliacaoService.Obter(request.usuario_id);
-        //    if (_usuario == null)
-        //        throw new Exception("");
+        public List<AvaliacaoResponse> Listar(int id)
+        {
+            ExpressionStarter<Avaliacao> filter = PredicateBuilder.New<Avaliacao>(a => true);
 
-        //    _request.UsuarioId = _usuario.id;
+            if (id > 0)
+                filter.And(a => a.Usuario.Id == id);
 
-        //    _request = _domain.Alterar(_request);
-        //    return _mapper.Map<AvaliacaoResponse>(_request);
-        //}       
+            Type myType = typeof(Avaliacao);
+
+            var _retorno = _domain.Listar(filter);
+
+            return _mapper.Map<List<AvaliacaoResponse>>(_retorno);
+        }
+
 
     }
 }

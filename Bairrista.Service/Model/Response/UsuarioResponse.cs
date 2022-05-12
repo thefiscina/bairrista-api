@@ -15,6 +15,8 @@ namespace Bairrista.Service.Model
         public int id { get; set; }
         public List<EnderecoResponse> enderecos { get; set; }
         public List<OrcamentoResponse> orcamentos { get; set; }
+        public List<AvaliacaoResponse> avaliacoes { get; set; }
+
 
 
     }

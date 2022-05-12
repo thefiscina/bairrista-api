@@ -65,6 +65,7 @@ namespace Bairrista.Dominio
 
         public OrcamentoResposta Obter(int id)
         {
+          
             return _baseRepository.GetById(id);
         }
     }

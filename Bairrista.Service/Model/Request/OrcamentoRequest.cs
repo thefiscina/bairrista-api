@@ -10,5 +10,6 @@ namespace Bairrista.Service.Model
         public int usuario_solicitante_id { get; set; }
         public int usuario_id { get; set; }
         public int endereco_id { get; set; }
+      
     }
 }

@@ -4,12 +4,12 @@ using Bairrista.Service.Model;
 
 namespace Bairrista.Service.Map
 {
-    public class OrcamentoResposta : Profile
+    public class OrcamentoRespostaProfile : Profile
     {
-        public OrcamentoResposta()
+        public OrcamentoRespostaProfile()
         {
-            CreateMap<Endereco, EnderecoResponse>().IgnoreAllPropertiesWithAnInaccessibleSetter();
-            CreateMap<EnderecoRequest, Endereco>().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<OrcamentoResposta, OrcamentoRespostaResponse>().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<OrcamentoRespostaRequest, OrcamentoResposta>().IgnoreAllPropertiesWithAnInaccessibleSetter();
         }
     }
 }

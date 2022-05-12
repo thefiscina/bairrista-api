@@ -41,5 +41,8 @@ namespace Bairrista.Dominio
 
         public List<Orcamento> Orcamentos { get; set; }
 
+        public List<Avaliacao> Avaliacoes { get; set; }
+
+
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Bairrista.Dominio
@@ -30,6 +31,8 @@ namespace Bairrista.Dominio
         [ForeignKey("Endereco")]
         public int EnderecoId { get; set; }
         public virtual Endereco Endereco { get; set; }
+
+        public List<OrcamentoResposta> Respostas { get; set; }
 
     }    
 }

@@ -15,5 +15,7 @@ namespace Bairrista.Service.Model
         public int UsuarioId { get; set; }
         public OrcamentoType status_orcamento { get; set; }
 
+        public List<OrcamentoRespostaResponse> Respostas { get; set; }
+
     }
 }

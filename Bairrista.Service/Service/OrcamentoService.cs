@@ -10,10 +10,12 @@ namespace Bairrista.Dominio.Service
 {
     public interface IOrcamentoService
     {
-        List<OrcamentoResponse> Listar(ComumQuery query);
+        List<OrcamentoResponse> Listar(int id, OrcamentoQuery query);
         OrcamentoResponse Obter(int id);
         OrcamentoResponse Salvar(OrcamentoRequest OrcamentoService);
-        OrcamentoResponse Alterar(int id, OrcamentoRequest OrcamentoService);                
+        OrcamentoResponse Alterar(int id, OrcamentoAlterarRequest OrcamentoService);
+        List<OrcamentoResponse> ListarOrcamento(int id);
+
     }
 
     public class OrcamentoService : IOrcamentoService
@@ -27,16 +29,36 @@ namespace Bairrista.Dominio.Service
             _domain = new OrcamentoDomain(context);
             _usuarioService = usuarioService;            
         }
-        public List<OrcamentoResponse> Listar(ComumQuery query)
+        public List<OrcamentoResponse> Listar(int id, OrcamentoQuery query)
         {
             ExpressionStarter<Orcamento> filter = PredicateBuilder.New<Orcamento>(a => true);
 
-            if (query.usuario_id > 0)
-                filter.And(a => a.Usuario.Id == query.usuario_id);
+            if (id > 0)
+                filter.And(a => a.Usuario.Id == id);
+
+
+            filter.And(a => a.StatusOrcamento == query.status_orcamento);
+
 
             Type myType = typeof(Orcamento);
        
             var _retorno = _domain.Listar(filter);          
+
+            return _mapper.Map<List<OrcamentoResponse>>(_retorno);
+        }
+
+
+
+        public List<OrcamentoResponse> ListarOrcamento(int id)
+        {
+            ExpressionStarter<Orcamento> filter = PredicateBuilder.New<Orcamento>(a => true);
+
+            if (id > 0)
+                filter.And(a => a.Usuario.Id == id);
+
+            Type myType = typeof(Orcamento);
+
+            var _retorno = _domain.Listar(filter);
 
             return _mapper.Map<List<OrcamentoResponse>>(_retorno);
         }
@@ -69,17 +91,12 @@ namespace Bairrista.Dominio.Service
             return _mapper.Map<OrcamentoResponse>(_request);
         }
 
-        public OrcamentoResponse Alterar(int id, OrcamentoRequest request)
+        public OrcamentoResponse Alterar(int id, OrcamentoAlterarRequest request)
         {
-            Orcamento _request = _mapper.Map<Orcamento>(request);           
-            UsuarioResponse _usuario = _usuarioService.Obter(request.usuario_id);
-            if (_usuario == null)
-                throw new Exception("");
-
-            _request.UsuarioId = _usuario.id;
-
-            _request = _domain.Alterar(_request);
-            return _mapper.Map<OrcamentoResponse>(_request);
+            Orcamento orcamento = _domain.Obter(id);
+            orcamento.StatusOrcamento = request.status_orcamento;
+            orcamento = _domain.Alterar(orcamento);
+            return _mapper.Map<OrcamentoResponse>(orcamento);
         }       
      
     }
