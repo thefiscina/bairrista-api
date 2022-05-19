@@ -11,6 +11,7 @@ namespace Bairrista.Dominio.Service
     public interface IOrcamentoService
     {
         List<OrcamentoResponse> Listar(int id, OrcamentoQuery query);
+        List<OrcamentoResponse> ListarSolicitantes(int id, OrcamentoQuery query);
         OrcamentoResponse Obter(int id);
         OrcamentoResponse Salvar(OrcamentoRequest OrcamentoService);
         OrcamentoResponse Alterar(int id, OrcamentoAlterarRequest OrcamentoService);
@@ -43,6 +44,23 @@ namespace Bairrista.Dominio.Service
             Type myType = typeof(Orcamento);
        
             var _retorno = _domain.Listar(filter);          
+
+            return _mapper.Map<List<OrcamentoResponse>>(_retorno);
+        }
+        public List<OrcamentoResponse> ListarSolicitantes(int id, OrcamentoQuery query)
+        {
+            ExpressionStarter<Orcamento> filter = PredicateBuilder.New<Orcamento>(a => true);
+
+            if (id > 0)
+                filter.And(a => a.UsuarioSolicitanteId == id);
+
+
+            filter.And(a => a.StatusOrcamento == query.status_orcamento);
+            
+
+            Type myType = typeof(Orcamento);
+
+            var _retorno = _domain.Listar(filter);
 
             return _mapper.Map<List<OrcamentoResponse>>(_retorno);
         }

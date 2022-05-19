@@ -13,6 +13,10 @@ namespace Bairrista.Dominio
         [Description("AGUARDANDO CLIENTE")]
         AGUARDANDO_CLIENTE = 3,
         [Description("RECUSADO PELO PROFISSIONAL")]
-        RECUSADO_PROFISSIONAL = 4
+        RECUSADO_PROFISSIONAL = 4,
+        [Description("FINALIZADO")]
+        FINALIZADO = 5,
+        [Description("AVALIADO")]
+        AVALIADO = 6
     }
 }

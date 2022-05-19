@@ -86,6 +86,15 @@ namespace Api.Controllers
             return retorno;
         }
 
+        [HttpGet("{id}/OrcamentoSolicitante")]
+        public List<OrcamentoResponse> ListarOrcamentosSolicitante(int id, [FromQuery] OrcamentoQuery query)
+        {
+            List<OrcamentoResponse> retorno = new List<OrcamentoResponse>();
+            retorno = _orcamentoUsuarioService.ListarSolicitantes(id, query);
+
+            return retorno;
+        }
+
         #endregion
 
         #region Avaliacoes      
