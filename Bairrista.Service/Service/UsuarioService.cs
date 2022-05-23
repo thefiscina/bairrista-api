@@ -19,6 +19,9 @@ namespace Bairrista.Dominio.Service
         UsuarioResponse Alterar(int id, UsuarioRequest cliente);
         List<UsuarioResponse> ListarComEndereco(UsuarioQuery query);
 
+        List<UsuarioResponse> ListarProfissionais(UsuarioQuery query);
+
+
     }
 
     public class UsuarioService : IUsuarioService
@@ -71,8 +74,31 @@ namespace Bairrista.Dominio.Service
 
             return _mapper.Map<UsuarioResponse>(_request);
         }
-       
 
+        public List<UsuarioResponse> ListarProfissionais(UsuarioQuery query)
+        {
+            ExpressionStarter<Usuario> filter = PredicateBuilder.New<Usuario>(a => true);
+
+            if (!string.IsNullOrEmpty(query.cpf))
+                filter.And(a => a.Cpf == query.cpf);
+
+
+            if (!string.IsNullOrEmpty(query.profissao))
+            {
+                string texto = query.profissao.ToLower();
+                filter.And(a => a.Profissao.ToLower().Contains(texto));
+            }
+
+            filter.And(a => a.Profissao != null && a.Profissao != "");
+
+            string includeProperties = "Enderecos,Orcamentos,Avaliacoes";
+
+            var _retorno = _domain.Listar(filter, includeProperties);
+
+
+
+            return _mapper.Map<List<UsuarioResponse>>(_retorno);
+        }
         public UsuarioResponse ObterPorCpf(string cpf)
         {
             ExpressionStarter<Usuario> filter = PredicateBuilder.New<Usuario>(a => true);

@@ -57,6 +57,14 @@ namespace Api.Controllers
             return _service.Alterar(id, bodyRequest);
         }
 
+        [HttpGet("Profissionais")]
+        public List<UsuarioResponse> ListarProfissionais([FromQuery] UsuarioQuery query)
+        {
+            List<UsuarioResponse> retorno = new List<UsuarioResponse>();
+            retorno = _service.ListarProfissionais(query);
+            return retorno;
+        }
+
         #region Endereco
         [HttpGet("{id}/Endereco")]
         public List<EnderecoResponse> ListarEnderecos(int id)
