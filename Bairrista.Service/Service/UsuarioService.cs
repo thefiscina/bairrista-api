@@ -18,10 +18,8 @@ namespace Bairrista.Dominio.Service
         UsuarioResponse Salvar(UsuarioRequest cliente);
         UsuarioResponse Alterar(int id, UsuarioRequest cliente);
         List<UsuarioResponse> ListarComEndereco(UsuarioQuery query);
-
         List<UsuarioResponse> ListarProfissionais(UsuarioQuery query);
-
-
+        UsuarioResponse SalvarSocial(UsuarioRequest cliente);
     }
 
     public class UsuarioService : IUsuarioService
@@ -39,7 +37,10 @@ namespace Bairrista.Dominio.Service
         
             if (!string.IsNullOrEmpty(query.cpf))
                 filter.And(a => a.Cpf == query.cpf);
-        
+
+            if (!string.IsNullOrEmpty(query.email))
+                filter.And(a => a.Email == query.email);
+
 
             if (!string.IsNullOrEmpty(query.profissao))
             {
@@ -60,6 +61,13 @@ namespace Bairrista.Dominio.Service
             var _entidadeDominio = _mapper.Map<Usuario>(request);         
             Auth.CriarSenhaHash(request.senha);          
             _entidadeDominio = _domain.Salvar(_entidadeDominio);
+            return _mapper.Map<UsuarioResponse>(_entidadeDominio);
+        }
+       public UsuarioResponse SalvarSocial(UsuarioRequest request)
+        {
+            var _entidadeDominio = _mapper.Map<Usuario>(request);
+            Auth.CriarSenhaHash(request.senha);
+            _entidadeDominio = _domain.SalvarSocial(_entidadeDominio);
             return _mapper.Map<UsuarioResponse>(_entidadeDominio);
         }
         public UsuarioResponse Alterar(int id, UsuarioRequest request)

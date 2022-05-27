@@ -12,7 +12,9 @@ namespace Bairrista.Dominio
         List<Usuario> Listar(Expression<Func<Usuario, bool>> filter = null, string includeProperties = "");                
         Usuario Obter(int id);
         Usuario ObterPorLogin(string login);
+        Usuario ObterPorEmail(string login);
         Usuario Salvar(Usuario cliente);
+        Usuario SalvarSocial(Usuario cliente);
         Usuario Alterar(Usuario cliente, int id);
     }
 
@@ -33,6 +35,26 @@ namespace Bairrista.Dominio
         {
             Usuario _usuario = ObterPorLogin(usuario.Cpf);
             if(_usuario != null)
+            {
+                throw new Exception("Usuário já cadastrado");
+            }
+            if (!String.IsNullOrEmpty(usuario.Profissao))
+            {
+                usuario.TipoUsuario = UsuarioType.PROFISSIONAL;
+            }
+            else
+            {
+                usuario.TipoUsuario = UsuarioType.COMUM;
+            }
+            _baseRepository.Save(usuario);
+            _baseRepository.SaveChanges();
+            return usuario;
+        }
+
+        public Usuario SalvarSocial(Usuario usuario)
+        {
+            Usuario _usuario = ObterPorEmail(usuario.Email);
+            if (_usuario != null)
             {
                 throw new Exception("Usuário já cadastrado");
             }
@@ -79,6 +101,12 @@ namespace Bairrista.Dominio
         {
             return _baseRepository.Consultar(PredicateBuilder.New<Usuario>().And(a => a.Cpf == login)).FirstOrDefault();
         }
+
+        public Usuario ObterPorEmail(string email)
+        {
+            return _baseRepository.Consultar(PredicateBuilder.New<Usuario>().And(a => a.Email == email)).FirstOrDefault();
+        }
+
 
         public Usuario Obter(int id)
         {

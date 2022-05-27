@@ -50,6 +50,12 @@ namespace Api.Controllers
             return _service.Salvar(usuarioRequest);
         }
 
+        [HttpPost("Google")]
+        public UsuarioResponse SalvarSocial([FromBody] UsuarioRequest usuarioRequest)
+        {
+            return _service.SalvarSocial(usuarioRequest);
+        }
+
 
         [HttpPut("{id}")]
         public UsuarioResponse Alterar(int id, [FromBody] UsuarioRequest bodyRequest)

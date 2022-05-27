@@ -23,6 +23,12 @@ namespace Api.Controllers
         public AuthResponse Salvar([FromBody] AuthRequest request)
         {
             return _service.Login(request);
-        }        
+        }
+
+        [HttpPost("SocialLogin")]
+        public AuthResponse SalvarSocial([FromBody] AuthRequest request)
+        {
+            return _service.LoginSocial(request);
+        }
     }
 }
